@@ -64,7 +64,7 @@ public class MainActivity extends Activity {
     }
 
     public void selectItem(int position) {
-        getActionBar().set
+        //getActionBar().set
        // setTheme(R.style.AppTheme);
        // super.onCreate(null);
        // setContentView(R.layout.main_drawer_layout);
