@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ececec">
+
+    <uk.co.senab.actionbarpulltorefresh.library.PullToRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/carddemo_extra_ptr_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <!-- You can customize this layout.
+         You need to have in your layout a `CardView` with the ID `list_cardId` -->
+        <it.gmariotti.cardslib.library.view.CardGridView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingTop="5dp"
+            android:columnWidth="175dp"
+            android:numColumns="auto_fit"
+            android:verticalSpacing="3dp"
+            android:horizontalSpacing="2dp"
+            android:stretchMode="columnWidth"
+            android:gravity="center"
+            card:list_card_layout_resourceID="@layout/recipe_list_item_card"
+            android:id="@+id/RecipeCardsListView"/>
+
+    </uk.co.senab.actionbarpulltorefresh.library.PullToRefreshLayout>
+
+</LinearLayout>

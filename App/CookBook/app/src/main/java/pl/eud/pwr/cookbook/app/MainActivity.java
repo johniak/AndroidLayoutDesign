@@ -65,7 +65,7 @@ public class MainActivity extends Activity {
 
     private void selectItem(int position) {
         // Create a new fragment and specify the planet to show based on position
-        Fragment fragment = new CookBookPageFragment();
+        Fragment fragment = new RecipeListFragment();
 
         // Insert the fragment by replacing any existing fragment
         FragmentManager fragmentManager = getFragmentManager();
