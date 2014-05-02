@@ -73,7 +73,7 @@ public class RecipeListFragment extends Fragment {
             recipeCard.setOnClickListener(new Card.OnCardClickListener() {
                 @Override
                 public void onClick(Card card, View view) {
-
+                    ((MainActivity)getActivity()).showDetails();
                 }
             });
             cards.add(recipeCard);
