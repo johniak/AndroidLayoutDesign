@@ -35,7 +35,7 @@ public class MainActivity extends Activity {
                 android.R.layout.simple_list_item_1, mPlanetTitles));
         // Set the list's click listener
         mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
-        selectItem(0);
+       selectItem(0);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerToggle = new ActionBarDrawerToggle(
                 this,                  /* host Activity */
@@ -63,10 +63,18 @@ public class MainActivity extends Activity {
         getActionBar().setHomeButtonEnabled(true);
     }
 
-    private void selectItem(int position) {
+    public void selectItem(int position) {
+        getActionBar().set
+       // setTheme(R.style.AppTheme);
+       // super.onCreate(null);
+       // setContentView(R.layout.main_drawer_layout);
         // Create a new fragment and specify the planet to show based on position
         Fragment fragment = new RecipeListFragment();
-
+        switch (position){
+            case 0:
+                fragment= new RecipeListFragment();
+                break;
+        }
         // Insert the fragment by replacing any existing fragment
         FragmentManager fragmentManager = getFragmentManager();
         fragmentManager.beginTransaction()
@@ -76,6 +84,15 @@ public class MainActivity extends Activity {
         // Highlight the selected item, update the title, and close the drawer
         mDrawerList.setItemChecked(position, true);
         setTitle(mPlanetTitles[position]);
+        mDrawerLayout.closeDrawer(mDrawerList);
+    }
+    public void showDetails(){
+        setTheme(R.style.AppTheme_TranslucentActionBar);
+        Fragment fragment = new CookBookPageFragment();
+        FragmentManager fragmentManager = getFragmentManager();
+        fragmentManager.beginTransaction()
+                .replace(R.id.content_frame, fragment)
+                .commit();
         mDrawerLayout.closeDrawer(mDrawerList);
     }
     @Override
