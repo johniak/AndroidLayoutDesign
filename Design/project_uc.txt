@@ -1,0 +1,28 @@
+Application UC with laws of UI design
+
+Article: http://99designs.com/designer-blog/2014/01/15/7-unbreakable-laws-of-user-interface-design/
+
+- Login (fake)
+	[Law of defaults - allow to receive mails]
+	[Law of feedback - successfully logged]
+
+- Register (fake)
+	[Law of feedback - successfully registered]
+	[Law of easing - diet, full name in second step (skip button)]
+
+- List of recipes (API)
+	[Law of clarity - minimal informations - name, picture, rating]
+	- Popular Now
+	- Favourite (require login)
+		[Law of guided action - Login/Register]
+	- Sesonal
+	- Quick and Easy
+
+- recipe details (API)
+	- add to favourite (require login)
+		[Law of feedback - change icon (empty star -> full star)]
+		[Law of guided action - Login/Register]
+		[Law of clarity - star symbol]
+		[Law of context - star button in details]
+	- gradients list
+	- open full article (link)
