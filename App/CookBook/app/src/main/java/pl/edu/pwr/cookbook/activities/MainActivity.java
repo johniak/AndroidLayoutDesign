@@ -10,7 +10,8 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import pl.edu.pwr.cookbook.fragments.CookBookPageFragment;
+import pl.edu.pwr.cookbook.fragments.RecipeDetailsFragment;
+import pl.edu.pwr.cookbook.fragments.RecipeDetailsFragment_;
 import pl.edu.pwr.cookbook.fragments.RecipeListFragment;
 import pl.edu.pwr.cookbook.app.R;
 
@@ -38,7 +39,8 @@ public class MainActivity extends BaseFragmentActivity {
     }
 
     public void showRecipeDetails() {
-        startFragment(CookBookPageFragment.class);
+
+        startFragment(RecipeDetailsFragment_.class);
     }
 
     @Override

@@ -16,5 +16,9 @@
     <style name="Widget.Light.ActionBar.Transparent">
         <item name="android:background">@android:color/transparent</item>
     </style>
-
+    <style name="foodRatingBar" parent="@android:style/Widget.RatingBar">
+        <item name="android:progressDrawable">@drawable/food_rating_bar_full</item>
+        <item name="android:minHeight">28dp</item>
+        <item name="android:maxHeight">48dp</item>
+    </style>
 </resources>
