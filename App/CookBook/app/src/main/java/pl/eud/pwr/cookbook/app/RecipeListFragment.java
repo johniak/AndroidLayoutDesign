@@ -1,5 +1,7 @@
 package pl.eud.pwr.cookbook.app;
 
+import android.app.ActionBar;
+import android.app.Activity;
 import android.app.Fragment;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -14,7 +16,6 @@ import java.util.ArrayList;
 import it.gmariotti.cardslib.library.internal.Card;
 import it.gmariotti.cardslib.library.internal.CardArrayAdapter;
 import it.gmariotti.cardslib.library.view.CardGridView;
-import it.gmariotti.cardslib.library.view.CardListView;
 import pl.eud.pwr.cookbook.app.cards.RecipeCard;
 import uk.co.senab.actionbarpulltorefresh.library.ActionBarPullToRefresh;
 import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshLayout;
@@ -35,14 +36,22 @@ public class RecipeListFragment extends Fragment {
         initPullToRefresh();
         initCards();
     }
+
+    @Override
+    public void onAttach(Activity activity) {
+        ActionBar actionBar = activity.getActionBar();
+        actionBar.setBackgroundDrawable(activity.getResources().getDrawable(R.drawable.ab_background_light));
+        super.onAttach(activity);
+    }
+
     void initPullToRefresh(){
         pullToRefreshLayout = (PullToRefreshLayout) getActivity().findViewById(R.id.carddemo_extra_ptr_layout);
         ActionBarPullToRefresh.from(this.getActivity())
                 .allChildrenArePullable()
-                .listener(onSingnalisedRefresh)
+                .listener(onSignalisedRefresh)
                 .setup(pullToRefreshLayout);
     }
-    OnRefreshListener onSingnalisedRefresh=new OnRefreshListener() {
+    OnRefreshListener onSignalisedRefresh =new OnRefreshListener() {
         @Override
         public void onRefreshStarted(View view) {
             new AsyncTask<Void, Void, Void>() {
@@ -60,6 +69,7 @@ public class RecipeListFragment extends Fragment {
                 @Override
                 protected void onPostExecute(Void result) {
                     super.onPostExecute(result);
+                    initCards();
                     pullToRefreshLayout.setRefreshComplete();
                 }
             }.execute();
@@ -73,7 +83,7 @@ public class RecipeListFragment extends Fragment {
             recipeCard.setOnClickListener(new Card.OnCardClickListener() {
                 @Override
                 public void onClick(Card card, View view) {
-                    ((MainActivity)getActivity()).showDetails();
+                    ((MainActivity)getActivity()).showRecipeDetails();
                 }
             });
             cards.add(recipeCard);

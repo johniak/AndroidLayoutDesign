@@ -31,7 +31,7 @@ public class CookBookPageFragment extends Fragment{
                 .actionBarBackground(R.drawable.ab_background_light)
                 .headerLayout(R.layout.header_light)
                 .contentLayout(R.layout.activity_main)
-                .lightActionBar(true);
+                .lightActionBar(false);
         fadingHelper.initActionBar(activity);
     }
 }

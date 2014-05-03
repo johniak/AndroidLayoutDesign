@@ -1,45 +1,74 @@
 package pl.eud.pwr.cookbook.app;
 
-import android.app.Activity;
-import android.app.Fragment;
-import android.app.FragmentManager;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-public class MainActivity extends Activity {
-    private String[] mPlanetTitles;
-    private DrawerLayout mDrawerLayout;
-    private ListView mDrawerList;
-    private ActionBarDrawerToggle mDrawerToggle;
+public class MainActivity extends BaseFragmentActivity {
+    private String[] drawerTitles;
+    private DrawerLayout drawerLayout;
+    private ListView drawerListView;
+    private ActionBarDrawerToggle drawerToggle;
 
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_drawer_layout);
+        selectItem(0);
+        initDrawer();
+    }
 
-        mPlanetTitles = getResources().getStringArray(R.array.drawer_items);
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        mDrawerList = (ListView) findViewById(R.id.left_drawer);
+    public void selectItem(int position) {
+        switch (position) {
+            case 0:
+                startFragment(RecipeListFragment.class,BaseFragmentActivity.FLAG_FRAGMENT_BROUGHT_TO_FRONT|BaseFragmentActivity.FLAG_FRAGMENT_CLEAR_TOP);
+                break;
+        }
+    }
 
-        // Set the adapter for the list view
-        mDrawerList.setAdapter(new ArrayAdapter<String>(this,
-                android.R.layout.simple_list_item_1, mPlanetTitles));
-        // Set the list's click listener
-        mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
-       selectItem(0);
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        mDrawerToggle = new ActionBarDrawerToggle(
+    public void showRecipeDetails() {
+        startFragment(CookBookPageFragment.class);
+    }
+
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        drawerToggle.syncState();
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        drawerToggle.onConfigurationChanged(newConfig);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (drawerToggle.onOptionsItemSelected(item)) {
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    public void initDrawer(){
+
+        drawerTitles = getResources().getStringArray(R.array.drawer_items);
+        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawerListView = (ListView) findViewById(R.id.left_drawer);
+        drawerListView.setAdapter(new ArrayAdapter<String>(this,
+                android.R.layout.simple_list_item_1, drawerTitles));
+        drawerListView.setOnItemClickListener(new DrawerItemClickListener());
+        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawerToggle = new ActionBarDrawerToggle(
                 this,                  /* host Activity */
-                mDrawerLayout,         /* DrawerLayout object */
+                drawerLayout,         /* DrawerLayout object */
                 R.drawable.ic_drawer,  /* nav drawer icon to replace 'Up' caret */
                 R.string.drawer_open,  /* "open drawer" description */
                 R.string.drawer_close  /* "close drawer" description */
@@ -57,71 +86,20 @@ public class MainActivity extends Activity {
                 getActionBar().setTitle("test2");
             }
         };
-        mDrawerLayout.setDrawerListener(mDrawerToggle);
-
+        drawerLayout.setDrawerListener(drawerToggle);
         getActionBar().setDisplayHomeAsUpEnabled(true);
         getActionBar().setHomeButtonEnabled(true);
     }
-
-    public void selectItem(int position) {
-        //getActionBar().set
-       // setTheme(R.style.AppTheme);
-       // super.onCreate(null);
-       // setContentView(R.layout.main_drawer_layout);
-        // Create a new fragment and specify the planet to show based on position
-        Fragment fragment = new RecipeListFragment();
-        switch (position){
-            case 0:
-                fragment= new RecipeListFragment();
-                break;
-        }
-        // Insert the fragment by replacing any existing fragment
-        FragmentManager fragmentManager = getFragmentManager();
-        fragmentManager.beginTransaction()
-                .replace(R.id.content_frame, fragment)
-                .commit();
-
-        // Highlight the selected item, update the title, and close the drawer
-        mDrawerList.setItemChecked(position, true);
-        setTitle(mPlanetTitles[position]);
-        mDrawerLayout.closeDrawer(mDrawerList);
-    }
-    public void showDetails(){
-        setTheme(R.style.AppTheme_TranslucentActionBar);
-        Fragment fragment = new CookBookPageFragment();
-        FragmentManager fragmentManager = getFragmentManager();
-        fragmentManager.beginTransaction()
-                .replace(R.id.content_frame, fragment)
-                .commit();
-        mDrawerLayout.closeDrawer(mDrawerList);
-    }
-    @Override
-    protected void onPostCreate(Bundle savedInstanceState) {
-        super.onPostCreate(savedInstanceState);
-        // Sync the toggle state after onRestoreInstanceState has occurred.
-        mDrawerToggle.syncState();
-    }
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-        mDrawerToggle.onConfigurationChanged(newConfig);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (mDrawerToggle.onOptionsItemSelected(item)) {
-            return true;
-        }
-        // Handle your other action bar items...
-
-        return super.onOptionsItemSelected(item);
-    }
-
 
     private class DrawerItemClickListener implements ListView.OnItemClickListener {
         @Override
         public void onItemClick(AdapterView parent, View view, int position, long id) {
             selectItem(position);
+            drawerListView.setItemChecked(position, true);
+            setTitle(drawerTitles[position]);
+            drawerLayout.closeDrawer(drawerListView);
         }
     }
+
+
 }
