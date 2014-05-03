@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.RatingBar;
@@ -23,6 +24,7 @@ import java.util.List;
 
 import it.gmariotti.cardslib.library.internal.Card;
 import it.gmariotti.cardslib.library.view.CardView;
+import pl.edu.pwr.cookbook.Utils.ViewsUtils;
 import pl.edu.pwr.cookbook.app.R;
 
 /**
@@ -33,6 +35,9 @@ public class RecipeDetailsFragment extends Fragment {
 
     private FadingActionBarHelper fadingHelper;
     private Bundle arguments;
+
+    @ViewById
+    ImageView headerImageView;
     @ViewById
     CardView tastesCardView;
     @ViewById
@@ -58,8 +63,7 @@ public class RecipeDetailsFragment extends Fragment {
     TextView totalTimeTextView;
 
     @ViewById
-    TextView ingredientsTextView;
-  //  ListView ingredientsListView;
+    ListView ingredientsListView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -69,6 +73,7 @@ public class RecipeDetailsFragment extends Fragment {
 
     @AfterViews
     void initCardsViews() {
+        headerImageView.setImageResource(R.drawable.ny);
         initOverlay();
         initIngredientsCard();
         initTastesCard();
@@ -87,18 +92,9 @@ public class RecipeDetailsFragment extends Fragment {
         ingredientsList.add("Rice");
         ingredientsList.add("Meat");
         ingredientsList.add("Milk");
-        String output="";
-        for(String s :ingredientsList){
-            output+=s+"\n";
-        }
-        output=output.substring(0,output.length()-2);
-        ingredientsTextView.setText(output);
-//        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_list_item_1,ingredientsList);
-//        ingredientsListView.setAdapter(arrayAdapter);
-//        ingredientsCardView.refreshCard(card);
-//        ingredientsCardView.refreshDrawableState();
-//        ingredientsCardView.invalidate();
-//        card.setExpanded(true);
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_list_item_1,ingredientsList);
+        ingredientsListView.setAdapter(arrayAdapter);
+        ViewsUtils.setListViewHeightBasedOnChildren(ingredientsListView);
     }
 
     void initTastesCard() {
@@ -118,7 +114,7 @@ public class RecipeDetailsFragment extends Fragment {
         arguments = getArguments();
         fadingHelper = new FadingActionBarHelper()
                 .actionBarBackground(R.drawable.ab_background_light)
-                .headerLayout(R.layout.header_light)
+                .headerLayout(R.layout.header)
                 .contentLayout(R.layout.recipe_details)
                 .lightActionBar(false);
         fadingHelper.headerOverlayLayout(R.layout.recipe_overlay);
