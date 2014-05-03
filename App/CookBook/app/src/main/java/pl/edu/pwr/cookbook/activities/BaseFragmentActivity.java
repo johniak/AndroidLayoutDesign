@@ -1,16 +1,17 @@
-package pl.eud.pwr.cookbook.app;
+package pl.edu.pwr.cookbook.activities;
 
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
-import android.content.Intent;
 import android.os.Bundle;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
+
+import pl.edu.pwr.cookbook.app.R;
 
 /**
  * Created by johniak8 on 5/3/14.

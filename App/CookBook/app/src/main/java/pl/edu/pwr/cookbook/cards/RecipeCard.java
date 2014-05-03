@@ -1,4 +1,4 @@
-package pl.eud.pwr.cookbook.app.cards;
+package pl.edu.pwr.cookbook.cards;
 
 import android.content.Context;
 import android.view.View;
@@ -6,7 +6,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import it.gmariotti.cardslib.library.internal.Card;
-import pl.eud.pwr.cookbook.app.R;
+import pl.edu.pwr.cookbook.app.R;
 
 /**
  * Created by johniak8 on 5/2/14.

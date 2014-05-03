@@ -1,4 +1,4 @@
-package pl.eud.pwr.cookbook.app;
+package pl.edu.pwr.cookbook.activities;
 
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -9,6 +9,10 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+
+import pl.edu.pwr.cookbook.fragments.CookBookPageFragment;
+import pl.edu.pwr.cookbook.fragments.RecipeListFragment;
+import pl.edu.pwr.cookbook.app.R;
 
 public class MainActivity extends BaseFragmentActivity {
     private String[] drawerTitles;
@@ -28,7 +32,7 @@ public class MainActivity extends BaseFragmentActivity {
     public void selectItem(int position) {
         switch (position) {
             case 0:
-                startFragment(RecipeListFragment.class,BaseFragmentActivity.FLAG_FRAGMENT_BROUGHT_TO_FRONT|BaseFragmentActivity.FLAG_FRAGMENT_CLEAR_TOP);
+                startFragment(RecipeListFragment.class, FLAG_FRAGMENT_BROUGHT_TO_FRONT | FLAG_FRAGMENT_CLEAR_TOP);
                 break;
         }
     }

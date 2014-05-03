@@ -1,4 +1,4 @@
-package pl.eud.pwr.cookbook.app;
+package pl.edu.pwr.cookbook.fragments;
 
 import android.app.ActionBar;
 import android.app.Activity;
@@ -16,7 +16,9 @@ import java.util.ArrayList;
 import it.gmariotti.cardslib.library.internal.Card;
 import it.gmariotti.cardslib.library.internal.CardArrayAdapter;
 import it.gmariotti.cardslib.library.view.CardGridView;
-import pl.eud.pwr.cookbook.app.cards.RecipeCard;
+import pl.edu.pwr.cookbook.cards.RecipeCard;
+import pl.edu.pwr.cookbook.activities.MainActivity;
+import pl.edu.pwr.cookbook.app.R;
 import uk.co.senab.actionbarpulltorefresh.library.ActionBarPullToRefresh;
 import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshLayout;
 import uk.co.senab.actionbarpulltorefresh.library.listeners.OnRefreshListener;

@@ -5,7 +5,7 @@ def AAVersion = '3.0.1'
 apt {
     arguments {
         androidManifestFile variant.processResources.manifestFile
-        resourcePackageName 'pl.eud.pwr.cookbook.app'
+        resourcePackageName 'pl.edu.pwr.cookbook.app'
 
         // If you're using Android NBS flavors you should use the following line instead of hard-coded packageName
         // resourcePackageName android.defaultConfig.packageName

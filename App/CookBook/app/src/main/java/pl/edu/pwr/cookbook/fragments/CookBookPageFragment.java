@@ -1,4 +1,4 @@
-package pl.eud.pwr.cookbook.app;
+package pl.edu.pwr.cookbook.fragments;
 
 import android.app.Activity;
 import android.app.Fragment;
@@ -8,6 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.manuelpeinado.fadingactionbar.FadingActionBarHelper;
+
+import pl.edu.pwr.cookbook.app.R;
 
 /**
  * Created by johniak8 on 5/2/14.
