@@ -61,7 +61,7 @@ public class BaseFragmentActivity extends Activity {
                 }
                 fragmentStack.remove(fragmentIndex);
                 fragmentStack.add(0,fragment);
-                setFragment(fragment);
+                setFragment(fragment,R.anim.slide_in,R.anim.slide_out);
             }else{
                 flags|=FLAG_FRAGMENT_NORMAL;
             }
@@ -74,7 +74,7 @@ public class BaseFragmentActivity extends Activity {
                 if(args!=null){
                     fragment.setArguments(args);
                 }
-                setFragment(fragment);
+                setFragment(fragment,R.anim.slide_in,R.anim.slide_out);
                 fragmentStack.add(0,fragment);
             } catch (NoSuchMethodException e) {
                 e.printStackTrace();
@@ -101,7 +101,7 @@ public class BaseFragmentActivity extends Activity {
         }
         fragmentStack.remove(0);
         Fragment fragment=fragmentStack.get(0);
-        setFragment(fragment);
+        setFragment(fragment,R.anim.stay_in,R.anim.slide_out);
     }
 
     public void setFragment(Fragment fragment){
