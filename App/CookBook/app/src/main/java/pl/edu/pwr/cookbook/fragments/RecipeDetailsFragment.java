@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
@@ -42,6 +43,16 @@ public class RecipeDetailsFragment extends Fragment {
     CardView tastesCardView;
     @ViewById
     CardView ingredientsCardView;
+    @ViewById
+    CardView detailsButtonCardView;
+
+    @ViewById
+    RatingBar recipeRatingBar;
+    @ViewById
+    TextView totalTimeTextView;
+
+    @ViewById
+    ListView ingredientsListView;
 
     @ViewById
     ProgressBar saltyProgressBar;
@@ -56,14 +67,11 @@ public class RecipeDetailsFragment extends Fragment {
     @ViewById
     ProgressBar spicyProgressBar;
 
-    @ViewById
-    RatingBar recipeRatingBar;
 
     @ViewById
-    TextView totalTimeTextView;
-
+    Button emailIngredientsButton;
     @ViewById
-    ListView ingredientsListView;
+    Button readFullDirectionsButton;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -77,6 +85,7 @@ public class RecipeDetailsFragment extends Fragment {
         initOverlay();
         initIngredientsCard();
         initTastesCard();
+        initDeatilButtons();
     }
 
     void initOverlay(){
@@ -106,6 +115,22 @@ public class RecipeDetailsFragment extends Fragment {
         bitterProgressBar.setProgress(20);
         sweetProgressBar.setProgress(70);
         spicyProgressBar.setProgress(30);
+    }
+    void initDeatilButtons(){
+        Card card = new Card(getActivity());
+        detailsButtonCardView.setCard(card);
+        emailIngredientsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+        readFullDirectionsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
     }
 
     @Override

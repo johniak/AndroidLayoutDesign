@@ -14,6 +14,9 @@ import pl.edu.pwr.cookbook.fragments.RecipeDetailsFragment;
 import pl.edu.pwr.cookbook.fragments.RecipeDetailsFragment_;
 import pl.edu.pwr.cookbook.fragments.RecipeListFragment;
 import pl.edu.pwr.cookbook.app.R;
+import pl.edu.pwr.cookbook.fragments.SignInFragment;
+import pl.edu.pwr.cookbook.fragments.SignInFragment_;
+import pl.edu.pwr.cookbook.fragments.SignUpFragment_;
 
 public class MainActivity extends BaseFragmentActivity {
     private String[] drawerTitles;
@@ -35,6 +38,14 @@ public class MainActivity extends BaseFragmentActivity {
             case 0:
                 startFragment(RecipeListFragment.class, FLAG_FRAGMENT_BROUGHT_TO_FRONT | FLAG_FRAGMENT_CLEAR_TOP);
                 break;
+            case 4:
+                startFragment(SignInFragment_.class, FLAG_FRAGMENT_BROUGHT_TO_FRONT | FLAG_FRAGMENT_CLEAR_TOP);
+                break;
+            case 5:
+                startFragment(SignUpFragment_.class, FLAG_FRAGMENT_BROUGHT_TO_FRONT | FLAG_FRAGMENT_CLEAR_TOP);
+                break;
+            default:
+                startFragment(RecipeListFragment.class, FLAG_FRAGMENT_BROUGHT_TO_FRONT | FLAG_FRAGMENT_CLEAR_TOP);
         }
     }
 
