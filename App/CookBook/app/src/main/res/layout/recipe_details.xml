@@ -23,11 +23,44 @@
         android:paddingTop="4dp"
         card:card_layout_resourceID="@layout/tastes_card" />
 
-    <it.gmariotti.cardslib.library.view.CardView
-        android:id="@+id/detailsButtonCardView"
+    <pl.edu.pwr.cookbook.views.InnerShadowButton
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="2dp"
-        android:paddingTop="4dp"
-        card:card_layout_resourceID="@layout/recipe_details_buttons_card" />
+        android:text="Email ingredients"
+        android:layout_marginTop="2dp"
+        android:layout_marginStart="2dp"
+        android:layout_marginEnd="2dp"
+        android:textColor="#ffffffff"
+        android:textStyle="bold"
+        android:textSize="24dp"
+        android:background="@drawable/green_card_button"
+        android:id="@+id/emailIngredientsButton" />
+
+    <View
+        android:layout_width="wrap_content"
+        android:layout_height="4dp"
+        android:background="@drawable/card_shadow"
+        android:layout_marginStart="3.5dp"
+        android:layout_marginEnd="3.5dp" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Read full directions"
+        android:layout_marginTop="2dp"
+        android:layout_marginStart="2dp"
+        android:layout_marginEnd="2dp"
+        android:textColor="#ffffffff"
+        android:textStyle="bold"
+        style="@style/ShadowedText"
+        android:textSize="24dp"
+        android:background="@drawable/green_card_button"
+        android:id="@+id/readFullDirectionsButton" />
+    <View
+        android:layout_width="wrap_content"
+        android:layout_height="4dp"
+        android:background="@drawable/card_shadow"
+        android:layout_marginStart="3.5dp"
+        android:layout_marginEnd="3.5dp" />
+
 </LinearLayout>

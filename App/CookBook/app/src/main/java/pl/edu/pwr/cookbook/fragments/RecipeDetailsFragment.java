@@ -25,7 +25,7 @@ import java.util.List;
 
 import it.gmariotti.cardslib.library.internal.Card;
 import it.gmariotti.cardslib.library.view.CardView;
-import pl.edu.pwr.cookbook.Utils.ViewsUtils;
+import pl.edu.pwr.cookbook.utils.ViewsUtils;
 import pl.edu.pwr.cookbook.app.R;
 
 /**
@@ -43,8 +43,6 @@ public class RecipeDetailsFragment extends Fragment {
     CardView tastesCardView;
     @ViewById
     CardView ingredientsCardView;
-    @ViewById
-    CardView detailsButtonCardView;
 
     @ViewById
     RatingBar recipeRatingBar;
@@ -117,8 +115,7 @@ public class RecipeDetailsFragment extends Fragment {
         spicyProgressBar.setProgress(30);
     }
     void initDeatilButtons(){
-        Card card = new Card(getActivity());
-        detailsButtonCardView.setCard(card);
+
         emailIngredientsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
