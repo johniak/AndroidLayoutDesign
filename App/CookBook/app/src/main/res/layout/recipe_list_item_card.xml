@@ -9,7 +9,7 @@
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="180dp"
-        android:src="@drawable/sample_food"
+        android:src="@drawable/empty_food_icon"
         android:id="@+id/imageView" android:scaleType="centerCrop"/>
 
     <LinearLayout
@@ -38,7 +38,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:numStars="5"
-        android:isIndicator="false"
+        android:isIndicator="true"
         android:layout_below="@+id/linearLayout"
         android:layout_marginTop="5dp"
         android:layout_marginLeft="5dp"

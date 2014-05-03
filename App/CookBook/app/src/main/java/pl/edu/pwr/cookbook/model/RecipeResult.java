@@ -27,7 +27,7 @@ public class RecipeResult {
 	}
 	public String getIcon() {
 		if(smallImageUrls.isEmpty())
-			return "http://placehold.it/350x150";
+			return "http://placehold.it/220x220";
 		return smallImageUrls.get(0);
 	}
 	public Float getTotalTimeInSeconds() {

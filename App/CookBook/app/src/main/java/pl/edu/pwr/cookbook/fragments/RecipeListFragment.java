@@ -3,8 +3,10 @@ package pl.edu.pwr.cookbook.fragments;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Fragment;
+import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,9 +18,13 @@ import java.util.ArrayList;
 import it.gmariotti.cardslib.library.internal.Card;
 import it.gmariotti.cardslib.library.internal.CardArrayAdapter;
 import it.gmariotti.cardslib.library.view.CardGridView;
-import pl.edu.pwr.cookbook.cards.RecipeCard;
 import pl.edu.pwr.cookbook.activities.MainActivity;
 import pl.edu.pwr.cookbook.app.R;
+import pl.edu.pwr.cookbook.cards.RecipeCard;
+import pl.edu.pwr.cookbook.model.RecipeResult;
+import pl.edu.pwr.cookbook.model.Results;
+import pl.edu.pwr.cookbook.network.APIClient;
+import pl.edu.pwr.cookbook.network.APIErrorException;
 import uk.co.senab.actionbarpulltorefresh.library.ActionBarPullToRefresh;
 import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshLayout;
 import uk.co.senab.actionbarpulltorefresh.library.listeners.OnRefreshListener;
@@ -28,6 +34,8 @@ import uk.co.senab.actionbarpulltorefresh.library.listeners.OnRefreshListener;
  */
 public class RecipeListFragment extends Fragment {
     PullToRefreshLayout pullToRefreshLayout;
+    CardArrayAdapter mCardArrayAdapter;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.recipe_list, container, false);
@@ -53,44 +61,52 @@ public class RecipeListFragment extends Fragment {
                 .listener(onSignalisedRefresh)
                 .setup(pullToRefreshLayout);
     }
-    OnRefreshListener onSignalisedRefresh =new OnRefreshListener() {
+
+    OnRefreshListener onSignalisedRefresh = new OnRefreshListener() {
         @Override
         public void onRefreshStarted(View view) {
-            new AsyncTask<Void, Void, Void>() {
+            new AsyncTask<Void, Void, Results>() {
 
                 @Override
-                protected Void doInBackground(Void... params) {
+                protected Results doInBackground(Void... params) {
+                    APIClient api = APIClient.getInstance();
+
                     try {
-                        Thread.sleep(2000);
-                    } catch (InterruptedException e) {
+                        return api.getResults(getActivity());
+                    }catch(APIErrorException e) {
                         e.printStackTrace();
                     }
                     return null;
                 }
 
                 @Override
-                protected void onPostExecute(Void result) {
-                    super.onPostExecute(result);
-                    initCards();
+                protected void onPostExecute(Results results) {
+                    super.onPostExecute(results);
+
+                    mCardArrayAdapter.clear();
+                    for(RecipeResult result : results.recipes) {
+                        RecipeCard recipeCard = new RecipeCard(getActivity(), result);
+                        recipeCard.setOnClickListener(new Card.OnCardClickListener() {
+                            @Override
+                            public void onClick(Card card, View view) {
+                                ((MainActivity)getActivity()).showRecipeDetails();
+                            }
+                        });
+                        mCardArrayAdapter.add(recipeCard);
+                    }
+                    mCardArrayAdapter.notifyDataSetChanged();
                     pullToRefreshLayout.setRefreshComplete();
                 }
             }.execute();
         }
     };
+
     void initCards(){
 
         ArrayList<Card> cards = new ArrayList<Card>();
-        for (int i = 0; i < 500; i++) {
-            RecipeCard recipeCard = new RecipeCard(getActivity(),"Title "+i);
-            recipeCard.setOnClickListener(new Card.OnCardClickListener() {
-                @Override
-                public void onClick(Card card, View view) {
-                    ((MainActivity)getActivity()).showRecipeDetails();
-                }
-            });
-            cards.add(recipeCard);
-        }
-        CardArrayAdapter mCardArrayAdapter = new CardArrayAdapter(getActivity(), cards);
+
+        mCardArrayAdapter = new CardArrayAdapter(getActivity(), cards);
+        onSignalisedRefresh.onRefreshStarted(null);
 
         CardGridView gridView = (CardGridView) getActivity().findViewById(R.id.RecipeCardsListView);
         if (gridView != null) {

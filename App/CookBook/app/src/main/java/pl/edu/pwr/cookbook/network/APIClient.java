@@ -21,7 +21,7 @@ public class APIClient {
 		return instance;
 	}
 
-	public ArrayList<Results> getResults(Context _context) throws APIErrorException {
+	public Results getResults(Context _context) throws APIErrorException {
 		HttpClient client = new HttpClient(_context);
 		String json = "";
 		try {
@@ -31,6 +31,6 @@ public class APIClient {
 		}
 
 		// parse
-		return new Gson().fromJson(json, new TypeToken<List<Results>>() {}.getType());
+		return new Gson().fromJson(json, new TypeToken<Results>() {}.getType());
 	}
 }
