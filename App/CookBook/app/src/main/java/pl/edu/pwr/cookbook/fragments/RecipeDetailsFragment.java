@@ -120,6 +120,7 @@ public class RecipeDetailsFragment extends Fragment {
             @Override
             protected void onPostExecute(Recipe recipe) {
                 super.onPostExecute(recipe);
+                getActivity().getActionBar().setTitle(recipe.getName());
                 recipeRatingBar.setRating(recipe.getRating());
                 totalTimeTextView.setText(recipe.getTime());
                 ImageLoader.getInstance().displayImage(recipe.getImages().getHostedLargeUrl(), headerImageView);

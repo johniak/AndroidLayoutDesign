@@ -23,6 +23,7 @@ public class MainActivity extends BaseFragmentActivity {
     private DrawerLayout drawerLayout;
     private ListView drawerListView;
     private ActionBarDrawerToggle drawerToggle;
+    private static String oldTitle = "";
 
 
     @Override
@@ -94,13 +95,14 @@ public class MainActivity extends BaseFragmentActivity {
             /** Called when a drawer has settled in a completely closed state. */
             public void onDrawerClosed(View view) {
                 super.onDrawerClosed(view);
-                getActionBar().setTitle("test1");
+                getActionBar().setTitle(oldTitle);
             }
 
             /** Called when a drawer has settled in a completely open state. */
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
-                getActionBar().setTitle("test2");
+                oldTitle = getActionBar().getTitle().toString();
+                getActionBar().setTitle("Menu");
             }
         };
         drawerLayout.setDrawerListener(drawerToggle);
