@@ -2,6 +2,8 @@ package pl.edu.pwr.cookbook.network;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import pl.edu.pwr.cookbook.model.Recipe;
 import pl.edu.pwr.cookbook.model.Results;
 import android.content.Context;
 import com.google.gson.Gson;
@@ -20,6 +22,19 @@ public class APIClient {
 		}
 		return instance;
 	}
+
+    public Recipe getRecipe(Context _context) throws APIErrorException {
+        HttpClient client = new HttpClient(_context);
+        String json = "";
+        try {
+            json = client.request("http://isweb.eu/web/jd/fakeAPI/more.json");
+        } catch (HttpClientException e) {
+            throw new APIErrorException("no internet connection");
+        }
+
+        // parse
+        return new Gson().fromJson(json, new TypeToken<Recipe>() {}.getType());
+    }
 
 	public Results getResults(Context _context) throws APIErrorException {
 		HttpClient client = new HttpClient(_context);

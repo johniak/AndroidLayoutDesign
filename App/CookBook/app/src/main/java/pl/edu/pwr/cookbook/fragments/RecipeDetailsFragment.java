@@ -2,7 +2,11 @@ package pl.edu.pwr.cookbook.fragments;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.app.ProgressDialog;
+import android.content.DialogInterface;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +19,7 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.manuelpeinado.fadingactionbar.FadingActionBarHelper;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EFragment;
@@ -25,6 +30,13 @@ import java.util.List;
 
 import it.gmariotti.cardslib.library.internal.Card;
 import it.gmariotti.cardslib.library.view.CardView;
+import pl.edu.pwr.cookbook.activities.MainActivity;
+import pl.edu.pwr.cookbook.cards.RecipeCard;
+import pl.edu.pwr.cookbook.model.Recipe;
+import pl.edu.pwr.cookbook.model.RecipeResult;
+import pl.edu.pwr.cookbook.model.Results;
+import pl.edu.pwr.cookbook.network.APIClient;
+import pl.edu.pwr.cookbook.network.APIErrorException;
 import pl.edu.pwr.cookbook.utils.ViewsUtils;
 import pl.edu.pwr.cookbook.app.R;
 
@@ -79,41 +91,67 @@ public class RecipeDetailsFragment extends Fragment {
 
     @AfterViews
     void initCardsViews() {
-        headerImageView.setImageResource(R.drawable.ny);
-        initOverlay();
-        initIngredientsCard();
-        initTastesCard();
+        final ProgressDialog mDialog = new ProgressDialog(getActivity());
+        mDialog.setMessage("Please wait...");
+        mDialog.setCanceledOnTouchOutside(false);
+        mDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialogInterface) {
+                getActivity().onBackPressed();
+            }
+        });
+        mDialog.show();
+
+        // load details
+        new AsyncTask<Void, Void, Recipe>() {
+
+            @Override
+            protected Recipe doInBackground(Void... params) {
+                APIClient api = APIClient.getInstance();
+
+                try {
+                    return api.getRecipe(getActivity());
+                }catch(APIErrorException e) {
+                    e.printStackTrace();
+                }
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(Recipe recipe) {
+                super.onPostExecute(recipe);
+                recipeRatingBar.setRating(recipe.getRating());
+                totalTimeTextView.setText(recipe.getTime());
+                ImageLoader.getInstance().displayImage(recipe.getImages().getHostedLargeUrl(), headerImageView);
+
+                // set ingredients
+                Card card = new Card(getActivity());
+                List<String> ingredientsList= new ArrayList<String>();
+                ingredientsCardView.setCard(card);
+                ingredientsList.addAll(recipe.getIngredientLines());
+                ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_list_item_1,ingredientsList);
+                ingredientsListView.setAdapter(arrayAdapter);
+                ViewsUtils.setListViewHeightBasedOnChildren(ingredientsListView);
+
+                // tastes
+                Card card2 = new Card(getActivity());
+                tastesCardView.setCard(card2);
+                saltyProgressBar.setProgress(recipe.getFlavors().getSalty());
+                savoryProgressBar.setProgress(56);
+                sourProgressBar.setProgress(recipe.getFlavors().getSour());
+                bitterProgressBar.setProgress(recipe.getFlavors().getBitter());
+                sweetProgressBar.setProgress(recipe.getFlavors().getSweet());
+                spicyProgressBar.setProgress(30);
+
+                // close dialog
+                mDialog.dismiss();
+            }
+        }.execute();
+
         initDeatilButtons();
     }
 
-    void initOverlay(){
-        recipeRatingBar.setRating(1.5f);
-        totalTimeTextView.setText("15 min");
-    }
 
-    void initIngredientsCard() {
-        Card card = new Card(getActivity());
-        List<String> ingredientsList= new ArrayList<String>();
-        ingredientsCardView.setCard(card);
-        ingredientsList.add("Butter");
-        ingredientsList.add("Rice");
-        ingredientsList.add("Meat");
-        ingredientsList.add("Milk");
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_list_item_1,ingredientsList);
-        ingredientsListView.setAdapter(arrayAdapter);
-        ViewsUtils.setListViewHeightBasedOnChildren(ingredientsListView);
-    }
-
-    void initTastesCard() {
-        Card card = new Card(getActivity());
-        tastesCardView.setCard(card);
-        saltyProgressBar.setProgress(10);
-        savoryProgressBar.setProgress(15);
-        sourProgressBar.setProgress(40);
-        bitterProgressBar.setProgress(20);
-        sweetProgressBar.setProgress(70);
-        spicyProgressBar.setProgress(30);
-    }
     void initDeatilButtons(){
 
         emailIngredientsButton.setOnClickListener(new View.OnClickListener() {

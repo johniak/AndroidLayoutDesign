@@ -23,15 +23,16 @@
         android:paddingTop="4dp"
         card:card_layout_resourceID="@layout/tastes_card" />
 
-    <pl.edu.pwr.cookbook.views.InnerShadowButton
+    <Button
+        android:text="Email ingredients"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Email ingredients"
         android:layout_marginTop="2dp"
         android:layout_marginStart="2dp"
         android:layout_marginEnd="2dp"
         android:textColor="#ffffffff"
         android:textStyle="bold"
+        style="@style/ShadowedText"
         android:textSize="24dp"
         android:background="@drawable/green_card_button"
         android:id="@+id/emailIngredientsButton" />
