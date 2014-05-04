@@ -1,8 +1,9 @@
 package pl.edu.pwr.cookbook.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Recipe {
+public class Recipe implements Serializable {
 	String name;
 	Flavors flavors;
 	ArrayList<String> ingredientLines;

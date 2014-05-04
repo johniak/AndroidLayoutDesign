@@ -46,6 +46,7 @@ import pl.edu.pwr.cookbook.app.R;
 @EFragment
 public class RecipeDetailsFragment extends Fragment {
 
+    public static final String EXTRA_MESSAGE = "Recipe";
     private FadingActionBarHelper fadingHelper;
     private Bundle arguments;
 
@@ -91,63 +92,30 @@ public class RecipeDetailsFragment extends Fragment {
 
     @AfterViews
     void initCardsViews() {
-        final ProgressDialog mDialog = new ProgressDialog(getActivity());
-        mDialog.setMessage("Please wait...");
-        mDialog.setCanceledOnTouchOutside(false);
-        mDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
-            @Override
-            public void onCancel(DialogInterface dialogInterface) {
-                getActivity().onBackPressed();
-            }
-        });
-        mDialog.show();
+        Recipe recipe = (Recipe) getArguments().getSerializable(EXTRA_MESSAGE);
+        getActivity().getActionBar().setTitle(recipe.getName());
+        recipeRatingBar.setRating(recipe.getRating());
+        totalTimeTextView.setText(recipe.getTime());
+        ImageLoader.getInstance().displayImage(recipe.getImages().getHostedLargeUrl(), headerImageView);
 
-        // load details
-        new AsyncTask<Void, Void, Recipe>() {
+        // set ingredients
+        Card card = new Card(getActivity());
+        List<String> ingredientsList= new ArrayList<String>();
+        ingredientsCardView.setCard(card);
+        ingredientsList.addAll(recipe.getIngredientLines());
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_list_item_1,ingredientsList);
+        ingredientsListView.setAdapter(arrayAdapter);
+        ViewsUtils.setListViewHeightBasedOnChildren(ingredientsListView);
 
-            @Override
-            protected Recipe doInBackground(Void... params) {
-                APIClient api = APIClient.getInstance();
-
-                try {
-                    return api.getRecipe(getActivity());
-                }catch(APIErrorException e) {
-                    e.printStackTrace();
-                }
-                return null;
-            }
-
-            @Override
-            protected void onPostExecute(Recipe recipe) {
-                super.onPostExecute(recipe);
-                getActivity().getActionBar().setTitle(recipe.getName());
-                recipeRatingBar.setRating(recipe.getRating());
-                totalTimeTextView.setText(recipe.getTime());
-                ImageLoader.getInstance().displayImage(recipe.getImages().getHostedLargeUrl(), headerImageView);
-
-                // set ingredients
-                Card card = new Card(getActivity());
-                List<String> ingredientsList= new ArrayList<String>();
-                ingredientsCardView.setCard(card);
-                ingredientsList.addAll(recipe.getIngredientLines());
-                ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_list_item_1,ingredientsList);
-                ingredientsListView.setAdapter(arrayAdapter);
-                ViewsUtils.setListViewHeightBasedOnChildren(ingredientsListView);
-
-                // tastes
-                Card card2 = new Card(getActivity());
-                tastesCardView.setCard(card2);
-                saltyProgressBar.setProgress(recipe.getFlavors().getSalty());
-                savoryProgressBar.setProgress(56);
-                sourProgressBar.setProgress(recipe.getFlavors().getSour());
-                bitterProgressBar.setProgress(recipe.getFlavors().getBitter());
-                sweetProgressBar.setProgress(recipe.getFlavors().getSweet());
-                spicyProgressBar.setProgress(30);
-
-                // close dialog
-                mDialog.dismiss();
-            }
-        }.execute();
+        // tastes
+        Card card2 = new Card(getActivity());
+        tastesCardView.setCard(card2);
+        saltyProgressBar.setProgress(recipe.getFlavors().getSalty());
+        savoryProgressBar.setProgress(56);
+        sourProgressBar.setProgress(recipe.getFlavors().getSour());
+        bitterProgressBar.setProgress(recipe.getFlavors().getBitter());
+        sweetProgressBar.setProgress(recipe.getFlavors().getSweet());
+        spicyProgressBar.setProgress(30);
 
         initDeatilButtons();
     }

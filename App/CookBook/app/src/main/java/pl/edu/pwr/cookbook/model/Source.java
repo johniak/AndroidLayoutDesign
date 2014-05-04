@@ -1,6 +1,8 @@
 package pl.edu.pwr.cookbook.model;
 
-public class Source {
+import java.io.Serializable;
+
+public class Source implements Serializable {
 	String sourceDisplayName;
 	String sourceRecipeUrl;
 }

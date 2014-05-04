@@ -17,6 +17,7 @@ import pl.edu.pwr.cookbook.app.R;
 import pl.edu.pwr.cookbook.fragments.SignInFragment;
 import pl.edu.pwr.cookbook.fragments.SignInFragment_;
 import pl.edu.pwr.cookbook.fragments.SignUpFragment_;
+import pl.edu.pwr.cookbook.model.Recipe;
 
 public class MainActivity extends BaseFragmentActivity {
     private String[] drawerTitles;
@@ -50,9 +51,10 @@ public class MainActivity extends BaseFragmentActivity {
         }
     }
 
-    public void showRecipeDetails() {
-
-        startFragment(RecipeDetailsFragment_.class);
+    public void showRecipeDetails(Recipe recipe) {
+        Bundle args = new Bundle();
+        args.putSerializable(RecipeDetailsFragment.EXTRA_MESSAGE, recipe);
+        startFragment(RecipeDetailsFragment_.class, FLAG_FRAGMENT_NORMAL, args);
     }
 
     @Override

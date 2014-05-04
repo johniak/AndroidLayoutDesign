@@ -2,7 +2,9 @@ package pl.edu.pwr.cookbook.model;
 
 import com.google.gson.annotations.SerializedName;
 
-public class Flavors {
+import java.io.Serializable;
+
+public class Flavors implements Serializable {
     @SerializedName("Meaty")
     Double meaty;
     @SerializedName("Salty")

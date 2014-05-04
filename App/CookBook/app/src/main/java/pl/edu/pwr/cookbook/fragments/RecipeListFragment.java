@@ -3,7 +3,9 @@ package pl.edu.pwr.cookbook.fragments;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Fragment;
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,9 +13,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.nostra13.universalimageloader.core.ImageLoader;
+
 import java.util.ArrayList;
+import java.util.List;
 
 import it.gmariotti.cardslib.library.internal.Card;
 import it.gmariotti.cardslib.library.internal.CardArrayAdapter;
@@ -21,6 +27,7 @@ import it.gmariotti.cardslib.library.view.CardGridView;
 import pl.edu.pwr.cookbook.activities.MainActivity;
 import pl.edu.pwr.cookbook.app.R;
 import pl.edu.pwr.cookbook.cards.RecipeCard;
+import pl.edu.pwr.cookbook.model.Recipe;
 import pl.edu.pwr.cookbook.model.RecipeResult;
 import pl.edu.pwr.cookbook.model.Results;
 import pl.edu.pwr.cookbook.network.APIClient;
@@ -62,6 +69,51 @@ public class RecipeListFragment extends Fragment {
                 .setup(pullToRefreshLayout);
     }
 
+    Card.OnCardClickListener onCardClickListener = new Card.OnCardClickListener() {
+        @Override
+        public void onClick(Card card, View view) {
+            final ProgressDialog mDialog = new ProgressDialog(getActivity());
+            final AsyncTask<Void, Void, Recipe> at = new AsyncTask<Void, Void, Recipe>() {
+
+                @Override
+                protected Recipe doInBackground(Void... params) {
+                    APIClient api = APIClient.getInstance();
+
+                    try {
+                        Recipe recipe = api.getRecipe(getActivity());
+                        if (isCancelled()) return null;
+                        return recipe;
+                    }catch(APIErrorException e) {
+                        e.printStackTrace();
+                    }
+                    return null;
+                }
+
+                @Override
+                protected void onPostExecute(Recipe recipe) {
+                    super.onPostExecute(recipe);
+                    mDialog.dismiss();
+
+                    if(recipe != null) {
+                        ((MainActivity) getActivity()).showRecipeDetails(recipe);
+                    }
+                }
+            };
+
+            mDialog.setMessage("Please wait...");
+            mDialog.setCanceledOnTouchOutside(false);
+            mDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+                @Override
+                public void onCancel(DialogInterface dialogInterface) {
+                    mDialog.dismiss();
+                    at.cancel(true);
+                }
+            });
+            mDialog.show();
+            at.execute();
+        }
+    };
+
     OnRefreshListener onSignalisedRefresh = new OnRefreshListener() {
         @Override
         public void onRefreshStarted(View view) {
@@ -86,12 +138,7 @@ public class RecipeListFragment extends Fragment {
                     mCardArrayAdapter.clear();
                     for(RecipeResult result : results.recipes) {
                         RecipeCard recipeCard = new RecipeCard(getActivity(), result);
-                        recipeCard.setOnClickListener(new Card.OnCardClickListener() {
-                            @Override
-                            public void onClick(Card card, View view) {
-                                ((MainActivity)getActivity()).showRecipeDetails();
-                            }
-                        });
+                        recipeCard.setOnClickListener(onCardClickListener);
                         mCardArrayAdapter.add(recipeCard);
                     }
                     mCardArrayAdapter.notifyDataSetChanged();
