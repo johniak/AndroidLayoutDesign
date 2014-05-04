@@ -31,23 +31,41 @@ public class MainActivity extends BaseFragmentActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_drawer_layout);
-        selectItem(0);
         initDrawer();
+        selectItem(0);
     }
 
     public void selectItem(int position) {
+        Bundle args;
         switch (position) {
             case 0:
-                startFragment(RecipeListFragment.class, FLAG_FRAGMENT_BROUGHT_TO_FRONT | FLAG_FRAGMENT_CLEAR_TOP);
+                args = new Bundle();
+                args.putString(RecipeListFragment.FRAMGENT_TITLE,drawerTitles[position]);
+                startFragment(RecipeListFragment.class, FLAG_FRAGMENT_SINGLE_TOP | FLAG_FRAGMENT_CLEAR_TOP,args);
+                break;
+            case 1:
+                args = new Bundle();
+                args.putString(RecipeListFragment.FRAMGENT_TITLE,drawerTitles[position]);
+                startFragment(RecipeListFragment.class, FLAG_FRAGMENT_SINGLE_TOP | FLAG_FRAGMENT_CLEAR_TOP,args);
+                break;
+            case 2:
+                args = new Bundle();
+                args.putString(RecipeListFragment.FRAMGENT_TITLE,drawerTitles[position]);
+                startFragment(RecipeListFragment.class, FLAG_FRAGMENT_SINGLE_TOP | FLAG_FRAGMENT_CLEAR_TOP,args);
+                break;
+            case 3:
+                args = new Bundle();
+                args.putString(RecipeListFragment.FRAMGENT_TITLE,drawerTitles[position]);
+                startFragment(RecipeListFragment.class, FLAG_FRAGMENT_SINGLE_TOP | FLAG_FRAGMENT_CLEAR_TOP, args);
                 break;
             case 4:
-                startFragment(SignInFragment_.class, FLAG_FRAGMENT_BROUGHT_TO_FRONT | FLAG_FRAGMENT_CLEAR_TOP);
+                startFragment(SignInFragment_.class, FLAG_FRAGMENT_SINGLE_TOP | FLAG_FRAGMENT_CLEAR_TOP);
                 break;
             case 5:
-                startFragment(SignUpFragment_.class, FLAG_FRAGMENT_BROUGHT_TO_FRONT | FLAG_FRAGMENT_CLEAR_TOP);
+                startFragment(SignUpFragment_.class, FLAG_FRAGMENT_SINGLE_TOP | FLAG_FRAGMENT_CLEAR_TOP);
                 break;
             default:
-                startFragment(RecipeListFragment.class, FLAG_FRAGMENT_BROUGHT_TO_FRONT | FLAG_FRAGMENT_CLEAR_TOP);
+                startFragment(RecipeListFragment.class, FLAG_FRAGMENT_SINGLE_TOP | FLAG_FRAGMENT_CLEAR_TOP);
         }
     }
 
@@ -75,6 +93,13 @@ public class MainActivity extends BaseFragmentActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void setTitle(CharSequence title) {
+        oldTitle=title.toString();
+        getActionBar().setTitle(title);
+        super.setTitle(title);
     }
 
     public void initDrawer(){

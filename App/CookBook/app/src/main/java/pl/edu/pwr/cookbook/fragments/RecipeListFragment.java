@@ -42,6 +42,7 @@ import uk.co.senab.actionbarpulltorefresh.library.listeners.OnRefreshListener;
 public class RecipeListFragment extends Fragment {
     PullToRefreshLayout pullToRefreshLayout;
     CardArrayAdapter mCardArrayAdapter;
+    public static final String FRAMGENT_TITLE="fragment_title";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -58,6 +59,11 @@ public class RecipeListFragment extends Fragment {
     public void onAttach(Activity activity) {
         ActionBar actionBar = activity.getActionBar();
         actionBar.setBackgroundDrawable(activity.getResources().getDrawable(R.drawable.ab_background_light));
+        Bundle args= getArguments();
+        if(args!=null)
+            activity.setTitle(args.getString(FRAMGENT_TITLE,"Popular Now"));
+        else
+            activity.setTitle("Popular Now");
         super.onAttach(activity);
     }
 
@@ -166,5 +172,11 @@ public class RecipeListFragment extends Fragment {
 
             }
         });
+    }
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+
+        super.onHiddenChanged(hidden);
     }
 }
