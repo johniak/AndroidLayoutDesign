@@ -3,7 +3,7 @@
     tools:context="pl.edu.pwr.cookbook.activities.MainActivity" >
 
     <!-- Search / will display always -->
-    <item android:id="@+id/action_search"
-        android:icon="@android:drawable/ic_menu_search"
+    <item android:id="@+id/add_favourite"
+        android:icon="@android:drawable/btn_star_big_off"
         android:showAsAction="ifRoom"/>
 </menu>

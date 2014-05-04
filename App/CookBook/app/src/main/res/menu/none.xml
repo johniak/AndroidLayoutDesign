@@ -2,8 +2,4 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="pl.edu.pwr.cookbook.activities.MainActivity" >
 
-    <!-- Search / will display always -->
-    <item android:id="@+id/action_search"
-        android:icon="@android:drawable/ic_menu_search"
-        android:showAsAction="ifRoom"/>
 </menu>
