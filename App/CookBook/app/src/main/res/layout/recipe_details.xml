@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#ececec"
+    xmlns:card="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:padding="15dp">
+
+    <it.gmariotti.cardslib.library.view.CardView
+        android:id="@+id/ingredientsCardView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="2dp"
+        android:paddingTop="4dp"
+        card:card_layout_resourceID="@layout/ingredients_card" />
+
+    <it.gmariotti.cardslib.library.view.CardView
+        android:id="@+id/tastesCardView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="2dp"
+        android:paddingTop="4dp"
+        card:card_layout_resourceID="@layout/tastes_card" />
+
+    <Button
+        android:text="Email ingredients"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:layout_marginStart="2dp"
+        android:layout_marginEnd="2dp"
+        android:textColor="#ffffffff"
+        android:textStyle="bold"
+        style="@style/ShadowedText"
+        android:textSize="24dp"
+        android:background="@drawable/green_card_button"
+        android:id="@+id/emailIngredientsButton" />
+
+    <View
+        android:layout_width="wrap_content"
+        android:layout_height="4dp"
+        android:background="@drawable/card_shadow"
+        android:layout_marginStart="3.5dp"
+        android:layout_marginEnd="3.5dp" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Read full directions"
+        android:layout_marginTop="2dp"
+        android:layout_marginStart="2dp"
+        android:layout_marginEnd="2dp"
+        android:textColor="#ffffffff"
+        android:textStyle="bold"
+        style="@style/ShadowedText"
+        android:textSize="24dp"
+        android:background="@drawable/green_card_button"
+        android:id="@+id/readFullDirectionsButton" />
+    <View
+        android:layout_width="wrap_content"
+        android:layout_height="4dp"
+        android:background="@drawable/card_shadow"
+        android:layout_marginStart="3.5dp"
+        android:layout_marginEnd="3.5dp" />
+
+</LinearLayout>

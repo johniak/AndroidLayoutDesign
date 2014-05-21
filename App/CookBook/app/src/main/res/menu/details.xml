@@ -1,0 +1,9 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="pl.edu.pwr.cookbook.activities.MainActivity" >
+
+    <!-- Search / will display always -->
+    <item android:id="@+id/add_favourite"
+        android:icon="@android:drawable/btn_star_big_off"
+        android:showAsAction="ifRoom"/>
+</menu>

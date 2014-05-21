@@ -1,0 +1,52 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/card_main_content_layout"
+    style="@style/card.content_outer_layout"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:paddingBottom="5dp">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="180dp"
+        android:src="@drawable/empty_food_icon"
+        android:id="@+id/imageView" android:scaleType="centerCrop"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/imageView"
+        android:layout_alignParentStart="true"
+        android:layout_alignEnd="@+id/imageView"
+        android:background="#77000000"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
+        android:paddingTop="2dp"
+        android:paddingBottom="2dp"
+        android:id="@+id/linearLayout">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/RecipeTitleTextView"
+            android:maxLines="2"
+            android:lines="2"
+            android:ellipsize="end"
+            android:text="Recipe1"
+            android:textSize="20dp"
+            android:textColor="#ffffff"
+            android:gravity="center" />
+    </LinearLayout>
+
+    <RatingBar
+        android:id="@+id/myRatingBar"
+        style="?android:attr/ratingBarStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:numStars="5"
+        android:isIndicator="true"
+        android:layout_below="@+id/linearLayout"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_alignParentStart="true" />
+</RelativeLayout>
